@@ -5,14 +5,14 @@ Stripped-down test case for kiln/flourish-sdk#40.
 */
 
 const fs = require("fs"),
+      https = require("https"),
       path = require("path"),
 
-      request = require("request"),
       tmp = require("tmp");
 
 function makeRequest() {
 	return new Promise(function(resolve, reject) {
-		request.post("https://www.google.com", resolve);
+		https.get("https://www.google.com", resolve);
 	});
 }
 
