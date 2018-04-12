@@ -11,29 +11,18 @@ const fs = require("fs"),
       request = require("request"),
       tmp = require("tmp");
 
-function getApiToken() {
-	const api_tokens_file = path.join(process.env.HOME || process.env.USERPROFILE, ".flourish_sdk");
+function make_api_request() {
 	return new Promise(function(resolve, reject) {
-		fs.readFile(api_tokens_file, "utf8", function(error, body) {
-			if (error) return reject(error);
-			resolve(JSON.parse(body)["app.flourish.studio"]);
+		request({
+			method: "POST",
+			uri: "https://app.flourish.studio/api/v1/nosuchmethod",
+			headers: { "Content-Type": "application/json" },
+			body: ""
+		},
+		function(error, response) {
+			resolve();
 		});
 	});
-}
-
-function whoami() {
-	return getApiToken()
-		.then(api_token => new Promise(function(resolve, reject) {
-			request({
-				method: "POST",
-				uri: "https://app.flourish.studio/api/v1/whoami",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ api_token, sdk_version: "2" })
-			}, function(error, response) {
-				if (error) reject(error);
-				else resolve(response);
-			});
-		}));
 }
 
 function createEmptyZipFile() {
@@ -53,4 +42,4 @@ function createEmptyZipFile() {
 	});
 }
 
-createEmptyZipFile().then(whoami);
+createEmptyZipFile().then(make_api_request);
