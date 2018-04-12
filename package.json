@@ -9,7 +9,6 @@
   "author": "Robin Houston",
   "license": "UNLICENSED",
   "dependencies": {
-    "archiver": "^2.1.1",
     "request": "^2.85.0",
     "tmp": "0.0.33"
   }
