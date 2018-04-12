@@ -11,17 +11,9 @@ const fs = require("fs"),
       request = require("request"),
       tmp = require("tmp");
 
-function make_api_request() {
+function makeRequest() {
 	return new Promise(function(resolve, reject) {
-		request({
-			method: "POST",
-			uri: "https://app.flourish.studio/api/v1/nosuchmethod",
-			headers: { "Content-Type": "application/json" },
-			body: ""
-		},
-		function(error, response) {
-			resolve();
-		});
+		request.post("https://app.flourish.studio/api/v1/nosuchmethod", resolve);
 	});
 }
 
@@ -42,4 +34,4 @@ function createEmptyZipFile() {
 	});
 }
 
-createEmptyZipFile().then(make_api_request);
+createEmptyZipFile().then(makeRequest);
