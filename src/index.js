@@ -18,14 +18,11 @@ function makeRequest() {
 
 function createEmptyFile() {
 	return new Promise(function(resolve, reject) {
-		tmp.file(function(error, zip_filename, zip_fd) {
+		tmp.file(function(error, filename, fd) {
 			if (error) return reject(error);
 
-			console.log("Creating %s (%d)", zip_filename, zip_fd);
-			let output = fs.createWriteStream(null, { fd: zip_fd });
-			output.on("close", function() {
-				resolve();
-			});
+			let output = fs.createWriteStream(null, { fd });
+			output.on("close", resolve);
 			output.close();
 		});
 	});
